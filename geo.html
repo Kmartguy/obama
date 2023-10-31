@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <body>
+      <style>
+        #container {
+          margin: 0px auto;
+          width: 500px;
+          height: 375px;
+          border: 10px #333 solid;
+        }
+        #videoElement {
+          width: 500px;
+          height: 375px;
+          background-color: #666;
+        }
+        </style>
+        <script>
+            const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+
+function success(pos) {
+  const crd = pos.coords;
+
+  alert("Your current position is:");
+  console.log(`Latitude : ${crd.latitude}
+ Longitude: ${crd.longitude} `);
+  alert(`More or less ${crd.accuracy} meters.`);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+getLocalStream();
+function getLocalStream() {
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    .then((stream) => {
+      window.localStream = stream; // A
+      window.localAudio.srcObject = stream; // B
+      window.localAudio.autoplay = true; // C
+    })
+    .catch((err) => {
+      console.error(`you got an error: ${err}`);
+    });
+}
+
+
+
+        </script>
+        <p>hello</p>
+        <img src="Obamium.webp">
+        <div id="container">
+          <video autoplay="true" id="videoElement">
+          
+          </video>
+    </body>
+</html>    
